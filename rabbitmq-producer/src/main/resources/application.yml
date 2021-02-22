@@ -1,0 +1,58 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: rabbitmq-producer
+  rabbitmq:
+    host: 120.26.163.175
+    port: 5672
+    username: huangyin
+    password: admin996
+    virtual-host: /wx-message-host
+    # rabbitmq 连接超时时间：15s
+    connection-timeout: 15000
+    # 发送者开启 confirm 确认机制
+    publisher-confirms: true
+    # 发送者开启 return 确认机制
+    publisher-returns: true
+  # 数据库相关配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://127.0.0.1:3306/rbac?characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai
+      username: root
+      password: admin
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      name: app
+      initialSize: 10
+      minIdle: 10
+      maxActive: 50
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      maxOpenPreparedStatements: 20
+      validationQuery: SELECT 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      filters: stat,wall
+      useGlobalDataSourceStat: true
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*,/actuator/*"
+      stat-view-servlet:
+        enabled: true
+        urlPattern: /druid/*
+        resetEnable: true
+
+# MyBatis Plus 配置
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  type-aliases-package: com.springboot.rabbitmqproducer.entity
+  configuration:
+    map-underscore-to-camel-case: true

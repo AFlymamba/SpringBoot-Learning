@@ -1,0 +1,20 @@
+server:
+  port: 9091
+
+spring:
+  rabbitmq:
+    host: 120.26.163.175
+    port: 5672
+    username: huangyin
+    password: admin996
+    #    virtual-host: /wx-message-host
+    virtual-host: /wx-message-host
+    # rabbitmq 连接超时时间
+    connection-timeout: 15000
+    # 监听配置
+    listener:
+      simple:
+        concurrency: 5
+        max-concurrency: 10
+        prefetch: 1
+        acknowledge-mode: manual
